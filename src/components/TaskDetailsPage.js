@@ -311,9 +311,15 @@ const TaskDetailsPage = () => {
                         <div key={index} style={styles.fileItem}>
                             {file.type.startsWith('image/') ? (
                                 <img src={file.content} alt={file.name} style={{ width: '100%', borderRadius: '5px' }} />
+                            ) : file.type === "application/pdf" ? (
+                                <iframe
+                                    src={file.content}
+                                    title={file.name}
+                                    style={{ width: "100%", height: "150px", border: "1px solid #ccc", borderRadius: "5px" }}
+                                />
                             ) : (
                                 <p style={{ color: '#ccc' }}>{file.name}</p>
-                            )}
+                            )}        
                             <button
                                 style={{
                                     marginTop: '5px',
