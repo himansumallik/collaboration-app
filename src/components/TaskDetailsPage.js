@@ -10,6 +10,47 @@ const TaskDetailsPage = () => {
     const [files, setFiles] = useState([]); // State for uploaded files
     const [progress, setProgress] = useState(ProjectData.progress || 0); // Local state for progress
 
+    // Handle file upload with improved validation and removal
+    const handleFileUpload = (e) => {
+        const uploadedFiles = Array.from(e.target.files);
+        const newFiles = [];
+
+        uploadedFiles.forEach((file) => {
+            if (file.size > 10 * 1024 * 1024) {
+                alert(`File "${file.name}" exceeds 10MB and was not uploaded.`);
+                return;
+            }
+            
+            // Prevent duplicate files
+            if (files.some((f) => f.name === file.name)) {
+                alert(`File "${file.name}" is already uploaded.`);
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                newFiles.push({
+                    name: file.name,
+                    type: file.type,
+                    content: event.target.result, // Store base64 content
+                });
+
+                // Update state only after all files are processed
+                setFiles((prevFiles) => [...prevFiles, ...newFiles]);
+            };
+            reader.onerror = () => {
+                alert(`Error reading file "${file.name}"`);
+            };
+            reader.readAsDataURL(file);
+        });
+    };
+
+    // Function to remove a file from the uploaded list
+    const handleRemoveFile = (fileName) => {
+        setFiles((prevFiles) => prevFiles.filter((file) => file.name !== fileName));
+    };
+
+
 
     // Find the task by taskId
     let task = null;
@@ -42,31 +83,6 @@ const TaskDetailsPage = () => {
         console.log(updatedProjectData); // For debugging
     };
 
-    // Handle file upload with error handling
-    const handleFileUpload = (e) => {
-        const uploadedFiles = Array.from(e.target.files);
-        uploadedFiles.forEach((file) => {
-            if (file.size > 10 * 1024 * 1024) { // Limit file size to 10MB
-                alert('File size exceeds 10MB');
-                return;
-            }
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                setFiles((prevFiles) => [
-                    ...prevFiles,
-                    {
-                        name: file.name,
-                        type: file.type,
-                        content: event.target.result, // Store file content (e.g., base64 URL)
-                    },
-                ]);
-            };
-            reader.onerror = () => {
-                alert('Error reading file');
-            };
-            reader.readAsDataURL(file); // Read file as base64 URL
-        });
-    };
 
     // Handle comment submission
     const handleCommentSubmit = () => {
@@ -288,42 +304,35 @@ const TaskDetailsPage = () => {
                 </label>
             </div>
 
-            {/* Display Uploaded Files in Grid Format */}
+            {/* Display Uploaded Files */}
             {files.length > 0 && (
-                <div style={{ marginTop: '20px' }}>
-                    <strong>Uploaded Files:</strong>
-                    <div style={styles.fileGrid}>
-                        {files.map((file, index) => (
-                            <div key={index} style={styles.fileItem}>
-                                <div style={{ color: '#ccc', marginBottom: '5px' }}>
-                                    {file.name}
-                                </div>
-                                {file.type.startsWith('image/') ? (
-                                    <img
-                                        src={file.content}
-                                        alt={file.name}
-                                        style={{ maxWidth: '100%', maxHeight: '200px', borderRadius: '5px' }}
-                                    />
-                                ) : file.type === 'application/pdf' ? (
-                                    <iframe
-                                        src={file.content}
-                                        title={file.name}
-                                        style={{ width: '100%', height: '500px', border: 'none' }}
-                                    />
-                                ) : (
-                                    <a
-                                        href={file.content}
-                                        download={file.name}
-                                        style={{ color: '#007bff', textDecoration: 'none' }}
-                                    >
-                                        Download {file.name}
-                                    </a>
-                                )}
-                            </div>
-                        ))}
-                    </div>
+                <div style={styles.fileGrid}>
+                    {files.map((file, index) => (
+                        <div key={index} style={styles.fileItem}>
+                            {file.type.startsWith('image/') ? (
+                                <img src={file.content} alt={file.name} style={{ width: '100%', borderRadius: '5px' }} />
+                            ) : (
+                                <p style={{ color: '#ccc' }}>{file.name}</p>
+                            )}
+                            <button
+                                style={{
+                                    marginTop: '5px',
+                                    backgroundColor: '#ff4444',
+                                    color: '#fff',
+                                    border: 'none',
+                                    borderRadius: '5px',
+                                    padding: '5px 10px',
+                                    cursor: 'pointer',
+                                }}
+                                onClick={() => handleRemoveFile(file.name)}
+                            >
+                                Remove
+                            </button>
+                        </div>
+                    ))}
                 </div>
             )}
+
 
             {/* Back Button */}
             <button
