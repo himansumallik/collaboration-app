@@ -87,7 +87,8 @@ const TaskDetailsPage = () => {
     // Handle comment submission
     const handleCommentSubmit = () => {
         if (comment.trim()) {
-            setCommentsList([...commentsList, comment]);
+            const memberName = "Alice"; // Replace with the actual member's name (e.g., from a logged-in user or dropdown)
+            setCommentsList([...commentsList, { text: comment, member: memberName }]);
             setComment(''); // Clear the textarea
         }
     };
@@ -275,7 +276,7 @@ const TaskDetailsPage = () => {
                     <ul style={{ listStyle: 'none', padding: 0 }}>
                         {commentsList.map((comment, index) => (
                             <li key={index} style={{ color: '#ccc', marginBottom: '10px' }}>
-                                {comment}
+                                <strong>{comment.member}:</strong> {comment.text}
                             </li>
                         ))}
                     </ul>
