@@ -1,6 +1,6 @@
 import React from 'react';
 import { SidebarContainer, SidebarItem, TeamMemberItem } from './styles';
-import { FaProjectDiagram, FaUsers, FaChartLine, FaCog, FaTachometerAlt, FaUser, FaEnvelope, FaCalendarAlt, FaBell, FaQuestionCircle, FaChartBar } from 'react-icons/fa';
+import { FaProjectDiagram, FaUsers, FaCog, FaTachometerAlt, FaUser, FaBell} from 'react-icons/fa';
 
 const Sidebar = ({ isSidebarOpen, isProjectPage, onTeamsClick, teamMembers, isTeamExpanded  }) => {
   return (
@@ -42,9 +42,6 @@ const Sidebar = ({ isSidebarOpen, isProjectPage, onTeamsClick, teamMembers, isTe
           </SidebarItem>
           <SidebarItem>
             <FaCog style={{ marginRight: '10px' }} /> {isSidebarOpen && 'Settings'}
-          </SidebarItem>
-          <SidebarItem>
-            <FaQuestionCircle style={{ marginRight: '10px' }} /> {isSidebarOpen && 'Help'}
           </SidebarItem>
         </>
       )}

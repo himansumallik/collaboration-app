@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { FaArrowLeft } from 'react-icons/fa'; // Import the back icon
 import ProjectData from '../components/ProjectData'; // Import your project data
 
 const TaskDetailsPage = () => {
@@ -50,8 +51,6 @@ const TaskDetailsPage = () => {
         setFiles((prevFiles) => prevFiles.filter((file) => file.name !== fileName));
     };
 
-
-
     // Find the task by taskId
     let task = null;
     let projectName = '';
@@ -83,12 +82,12 @@ const TaskDetailsPage = () => {
         console.log(updatedProjectData); // For debugging
     };
 
-
     // Handle comment submission
     const handleCommentSubmit = () => {
         if (comment.trim()) {
             const memberName = "Alice"; // Replace with the actual member's name (e.g., from a logged-in user or dropdown)
-            setCommentsList([...commentsList, { text: comment, member: memberName }]);
+            const commentTime = new Date().toLocaleTimeString(); // Get the current time
+            setCommentsList([...commentsList, { text: comment, member: memberName, time: commentTime }]);
             setComment(''); // Clear the textarea
         }
     };
@@ -109,7 +108,7 @@ const TaskDetailsPage = () => {
         alert(task.completed ? 'Task marked as incomplete' : 'Task marked as completed');
     };
 
-    // Handle back button with confirmation dialog
+    // Handle back navigation with confirmation dialog
     const handleBack = () => {
         if (comment.trim() || files.length > 0) {
             const confirmBack = window.confirm('You have unsaved changes. Are you sure you want to leave?');
@@ -128,10 +127,23 @@ const TaskDetailsPage = () => {
             color: '#fff',
             minHeight: '100vh',
             padding: '20px',
+            position: 'relative', // Ensure the back icon is positioned correctly
         },
         heading: {
             color: 'orange',
             marginBottom: '20px',
+            display: 'flex',
+            alignItems: 'center',
+        },
+        backIcon: {
+            cursor: 'pointer',
+            marginRight: '20px',
+            fontSize: '24px',
+            color: '#fff',
+            transition: 'color 0.3s',
+            ':hover': {
+                color: '#007bff', // Change color on hover
+            },
         },
         taskName: {
             color: '#fff',
@@ -164,7 +176,16 @@ const TaskDetailsPage = () => {
 
     return (
         <div style={styles.container}>
-            <h1 style={styles.heading}>Task Details</h1>
+            {/* Back Icon at the top-left corner */}
+            <div style={styles.heading}>
+                <FaArrowLeft
+                    style={styles.backIcon}
+                    onClick={handleBack}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = '#007bff')}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = '#fff')}
+                />
+                <h1>Task Details</h1>
+            </div>
 
             {/* Task Name */}
             <h2 style={styles.taskName}>{task.name}</h2>
@@ -276,13 +297,13 @@ const TaskDetailsPage = () => {
                     <ul style={{ listStyle: 'none', padding: 0 }}>
                         {commentsList.map((comment, index) => (
                             <li key={index} style={{ color: '#ccc', marginBottom: '10px' }}>
-                                <strong>{comment.member}:</strong> {comment.text}
+                                <strong>{comment.member}</strong> ({comment.time}): {comment.text}
                             </li>
                         ))}
                     </ul>
                 </div>
             )}
-
+            
             {/* Actions */}
             <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
                 <button
@@ -339,23 +360,6 @@ const TaskDetailsPage = () => {
                     ))}
                 </div>
             )}
-
-
-            {/* Back Button */}
-            <button
-                style={{
-                    marginTop: '20px',
-                    padding: '10px 20px',
-                    backgroundColor: '#555',
-                    color: '#fff',
-                    border: 'none',
-                    borderRadius: '5px',
-                    cursor: 'pointer',
-                }}
-                onClick={handleBack}
-            >
-                Back
-            </button>
         </div>
     );
 };
