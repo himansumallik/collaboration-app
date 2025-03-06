@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { FaBars, FaHome, FaUserCircle, FaSignOutAlt } from "react-icons/fa"; // Importing icons
 import { FaAnglesRight } from "react-icons/fa6";
 
@@ -14,6 +14,8 @@ import {
 
 const Navbar = ({ setSidebarOpen, isSidebarOpen, handleLogout }) => {
   const navigate = useNavigate();
+  const location = useLocation(); // Import useLocation from react-router-dom
+
 
   const confirmLogout = () => {
     if (window.confirm("Are you sure you want to logout?")) {
@@ -31,10 +33,9 @@ const Navbar = ({ setSidebarOpen, isSidebarOpen, handleLogout }) => {
       <div style={{ display: "flex", alignItems: "center" }}>
         <MinimizeIcon
           onClick={() => setSidebarOpen(!isSidebarOpen)}
-          style={{ marginRight: "20px" }}
+          style={{ marginRight: "20px", transform: isSidebarOpen ? "rotate(0deg)" : "rotate(180deg)", transition: "transform 0.3s" }}
         >
-          {/* Conditionally render the icon based on isSidebarOpen */}
-          {isSidebarOpen ?  <FaBars /> : <FaAnglesRight />}
+          <FaAnglesRight />
         </MinimizeIcon>
         <Logo 
           onClick={handleLogoClick}
@@ -64,12 +65,13 @@ const Navbar = ({ setSidebarOpen, isSidebarOpen, handleLogout }) => {
       </div>
       <NavLinks>
         {/* Home section with icon */}
-        <NavItem>
-          <NavLink onClick={() => navigate("/home")}>
-            <FaHome style={{ marginRight: "8px" }} />
-            Home
-          </NavLink>
-        </NavItem>
+        <NavLink
+          onClick={() => navigate("/home")}
+          style={{ color: location.pathname === "/home" ? "#ff6347" : "inherit" }}
+        >
+          <FaHome style={{ marginRight: "8px" }} />
+          Home
+        </NavLink>
 
         {/* Profile section with icon */}
         <NavItem>
