@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { FaBars, FaHome, FaUserCircle, FaSignOutAlt } from "react-icons/fa";
+import { FaHome, FaUserCircle, FaSignOutAlt } from "react-icons/fa";
 import { FaAnglesRight } from "react-icons/fa6";
 import {
   NavbarContainer,

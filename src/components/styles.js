@@ -34,6 +34,7 @@ export const NavLinks = styled.div`
   gap: 20px;
 `;
 
+
 export const NavLink = styled.button`
   background: none;
   border: none;

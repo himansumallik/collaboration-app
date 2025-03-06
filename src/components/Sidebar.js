@@ -25,9 +25,6 @@ const Sidebar = ({ isSidebarOpen, isProjectPage, onTeamsClick, teamMembers, isTe
             </div>
           )}
           <SidebarItem>
-            <FaChartLine style={{ marginRight: '10px' }} /> {isSidebarOpen && 'Reports'}
-          </SidebarItem>
-          <SidebarItem>
             <FaCog style={{ marginRight: '10px' }} /> {isSidebarOpen && 'Settings'}
           </SidebarItem>
         </>
@@ -38,28 +35,10 @@ const Sidebar = ({ isSidebarOpen, isProjectPage, onTeamsClick, teamMembers, isTe
             <FaTachometerAlt style={{ marginRight: '10px' }} /> {isSidebarOpen && 'Dashboard'}
           </SidebarItem>
           <SidebarItem>
-            <FaProjectDiagram style={{ marginRight: '10px' }} /> {isSidebarOpen && 'Projects'}
-          </SidebarItem>
-          <SidebarItem>
             <FaUser style={{ marginRight: '10px' }} /> {isSidebarOpen && 'Profile'}
           </SidebarItem>
           <SidebarItem>
-            <FaEnvelope style={{ marginRight: '10px' }} /> {isSidebarOpen && 'Messages'}
-          </SidebarItem>
-          <SidebarItem>
-            <FaCalendarAlt style={{ marginRight: '10px' }} /> {isSidebarOpen && 'Calendar'}
-          </SidebarItem>
-          <SidebarItem>
-            <FaChartLine style={{ marginRight: '10px' }} /> {isSidebarOpen && 'Reports'}
-          </SidebarItem>
-          <SidebarItem>
             <FaBell style={{ marginRight: '10px' }} /> {isSidebarOpen && 'Notifications'}
-          </SidebarItem>
-          <SidebarItem onClick={onTeamsClick}> {/* Add onClick handler */}
-            <FaUsers style={{ marginRight: '10px' }} /> {isSidebarOpen && 'Team'}
-          </SidebarItem>
-          <SidebarItem>
-            <FaChartBar style={{ marginRight: '10px' }} /> {isSidebarOpen && 'Analytics'}
           </SidebarItem>
           <SidebarItem>
             <FaCog style={{ marginRight: '10px' }} /> {isSidebarOpen && 'Settings'}
