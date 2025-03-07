@@ -125,6 +125,7 @@ const TaskDetailsPage = () => {
         container: {
             backgroundColor: '#121212',
             color: '#fff',
+            width: '100%',
             minHeight: '100vh',
             padding: '20px',
             position: 'relative', // Ensure the back icon is positioned correctly
@@ -201,24 +202,6 @@ const TaskDetailsPage = () => {
             </p>
 
             {/* Progress */}
-            <div style={{ marginBottom: '15px' }}>
-                <strong>Progress:</strong>
-                <div style={{
-                    width: '100%',
-                    height: '10px',
-                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                    borderRadius: '5px',
-                    marginTop: '5px',
-                }}>
-                    <div style={{
-                        width: `${task.progress || 0}%`,
-                        height: '100%',
-                        backgroundColor: '#007bff',
-                        borderRadius: '5px',
-                    }}></div>
-                </div>
-                <span style={{ color: '#ccc', fontSize: '14px' }}>{task.progress || 0}% Complete</span>
-            </div>
 
             <div style={{ marginBottom: '15px' }}>
                 <strong>Progress:</strong>

@@ -38,9 +38,6 @@ const Sidebar = ({ isSidebarOpen, isProjectPage, onTeamsClick, teamMembers, isTe
             <FaUser style={{ marginRight: '10px' }} /> {isSidebarOpen && 'Profile'}
           </SidebarItem>
           <SidebarItem>
-            <FaBell style={{ marginRight: '10px' }} /> {isSidebarOpen && 'Notifications'}
-          </SidebarItem>
-          <SidebarItem>
             <FaCog style={{ marginRight: '10px' }} /> {isSidebarOpen && 'Settings'}
           </SidebarItem>
         </>
