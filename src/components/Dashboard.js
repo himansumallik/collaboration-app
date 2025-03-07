@@ -11,7 +11,7 @@ import {
 } from "./styles";
 import { CiSquarePlus } from "react-icons/ci";
 import AddProjectMemberForm from "./ProjectMemberform";
-import ProjectData from "./ProjectData";
+import ProjectData from "../database/ProjectData";
 
 const Dashboard = () => {
   const navigate = useNavigate();

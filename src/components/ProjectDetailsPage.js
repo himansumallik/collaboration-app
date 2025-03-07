@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
-import ProjectData from "./ProjectData";
+import ProjectData from "../database/ProjectData";
 import { DashboardContainer, MainContent } from "./styles";
 import { CiSquarePlus } from "react-icons/ci";
 import AddProjectMemberForm from "./ProjectMemberform";

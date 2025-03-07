@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa'; // Import the back icon
-import ProjectData from '../components/ProjectData'; // Import your project data
+import ProjectData from '../database/ProjectData'; // Import your project data
 
 const TaskDetailsPage = () => {
     const { taskId } = useParams(); // Get the taskId from the URL
