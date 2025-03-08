@@ -1,8 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react'; // Add useState import
 import { SidebarContainer, SidebarItem, TeamMemberItem } from './styles';
 import { FaProjectDiagram, FaUsers, FaCog, FaTachometerAlt, FaUser, FaBell } from 'react-icons/fa';
 
-const Sidebar = ({ isSidebarOpen, isProjectPage, onTeamsClick, teamMembers, isTeamExpanded }) => {
+const Sidebar = ({
+  isSidebarOpen,
+  isProjectPage,
+  onTeamsClick,
+  teamMembers = [], // Default to empty array to avoid errors
+  isTeamExpanded,
+  setTeamMembers, // Pass setTeamMembers as a prop from the parent component
+}) => {
+  const [showAddMemberForm, setShowAddMemberForm] = useState(false);
+  const [newMemberName, setNewMemberName] = useState('');
+
+  const handleAddMember = () => {
+    if (newMemberName.trim()) {
+      // Check for duplicates
+      if (!teamMembers.includes(newMemberName.trim())) {
+        setTeamMembers([...teamMembers, newMemberName.trim()]);
+        setNewMemberName(''); // Clear the input
+        setShowAddMemberForm(false); // Close the form
+      } else {
+        alert('Member already exists!'); // Simple duplicate check
+      }
+    }
+  };
+
   return (
     <SidebarContainer isSidebarOpen={isSidebarOpen}>
       {isProjectPage ? (
@@ -20,20 +43,21 @@ const Sidebar = ({ isSidebarOpen, isProjectPage, onTeamsClick, teamMembers, isTe
           {/* Conditionally render team members */}
           {isTeamExpanded && isSidebarOpen && (
             <div style={{ marginLeft: '20px' }}>
+
+              {/* Add Member Option */}
+              <TeamMemberItem
+                onClick={() => setShowAddMemberForm(true)} // Open the form/modal
+                style={{ cursor: 'pointer', color: '#00C851' }} // Teal for the "+" sign
+              >
+                <span style={{ marginRight: '5px' }}>+</span> Add Member
+              </TeamMemberItem>
+
               {/* List of team members */}
               {teamMembers.map((member, index) => (
                 <TeamMemberItem key={index}>
                   <span style={{ color: '#CCCCCC' }}>{member}</span> {/* Light Gray */}
                 </TeamMemberItem>
               ))}
-
-              {/* Add Member Option */}
-              <TeamMemberItem 
-                onClick={() => setShowAddMemberForm(true)} // Open the form/modal
-                style={{ cursor: 'pointer', color: '#00C851' }} // Teal for the "+" sign
-              >
-                <span style={{ marginRight: '5px' }}>+</span> Add Member
-              </TeamMemberItem>
             </div>
           )}
 
@@ -53,16 +77,10 @@ const Sidebar = ({ isSidebarOpen, isProjectPage, onTeamsClick, teamMembers, isTe
                 }}
                 value={newMemberName}
                 onChange={(e) => setNewMemberName(e.target.value)}
+                aria-label="Enter member name"
               />
               <button
-                onClick={() => {
-                  if (newMemberName.trim()) {
-                    // Add the new member to the team
-                    setTeamMembers([...teamMembers, newMemberName.trim()]);
-                    setNewMemberName(''); // Clear the input
-                    setShowAddMemberForm(false); // Close the form
-                  }
-                }}
+                onClick={handleAddMember}
                 style={{
                   padding: '5px 10px',
                   borderRadius: '4px',

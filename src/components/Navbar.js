@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FaHome, FaUserCircle, FaSignOutAlt, FaBell } from "react-icons/fa"; // Added FaBell
 import { FaAnglesRight } from "react-icons/fa6";
+import notifications from "../database/notification"; // Import notifications
 import {
   NavbarContainer,
   Logo,
@@ -15,12 +16,8 @@ const Navbar = ({ setSidebarOpen, isSidebarOpen, handleLogout }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
-  const [showNotifications, setShowNotifications] = useState(false); // State for notifications dropdown
-  const [notifications, setNotifications] = useState([
-    "New message from John",
-    "Task deadline approaching",
-    "Project update available",
-  ]); // Sample notifications
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [notificationsList, setNotificationsList] = useState([]);
 
   const confirmLogout = () => {
     setShowLogoutModal(true);
@@ -34,6 +31,11 @@ const Navbar = ({ setSidebarOpen, isSidebarOpen, handleLogout }) => {
   const handleLogoClick = () => {
     navigate("/home");
   };
+
+  // Fetch notifications on component mount
+  useEffect(() => {
+    setNotificationsList(notifications); // Set notifications from the database
+  }, []);
 
   const toggleNotifications = () => {
     setShowNotifications(!showNotifications);
@@ -121,7 +123,7 @@ const Navbar = ({ setSidebarOpen, isSidebarOpen, handleLogout }) => {
           >
             <FaBell size={20} style={{ marginRight: "8px", color: "#FFFFFF" }} />
             Notifications
-            {notifications.length > 0 && (
+            {notificationsList.length > 0 && (
               <span
                 style={{
                   position: "absolute",
@@ -136,7 +138,7 @@ const Navbar = ({ setSidebarOpen, isSidebarOpen, handleLogout }) => {
                   boxShadow: "0 0 5px rgba(0, 0, 0, 0.3)",
                 }}
               >
-                {notifications.length}
+                {notificationsList.length}
               </span>
             )}
           </NavLink>
@@ -170,8 +172,8 @@ const Navbar = ({ setSidebarOpen, isSidebarOpen, handleLogout }) => {
                 Notifications
               </div>
 
-              {notifications.length > 0 ? (
-                notifications.map((notification, index) => (
+              {notificationsList.length > 0 ? (
+                notificationsList.map((notification, index) => (
                   <div
                     key={index}
                     style={{
@@ -184,7 +186,11 @@ const Navbar = ({ setSidebarOpen, isSidebarOpen, handleLogout }) => {
                     onMouseEnter={(e) => (e.currentTarget.style.background = "#444")} // Darker Gray
                     onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
                   >
-                    {notification}
+                    <div style={{ fontWeight: "bold" }}>{notification.sent_by}</div>
+                    <div>{notification.message}</div>
+                    <div style={{ fontSize: "12px", color: "#CCCCCC" }}>
+                      {new Date(notification.created_at).toLocaleString()}
+                    </div>
                   </div>
                 ))
               ) : (

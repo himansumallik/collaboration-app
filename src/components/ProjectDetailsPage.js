@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Link } from 'react-router-dom';
-import { useParams, useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import ProjectData from "../database/ProjectData";
@@ -12,30 +11,39 @@ const ProjectDetailsPage = () => {
     const [isSidebarOpen, setSidebarOpen] = useState(true);
     const [showForm, setShowForm] = useState(false);
     const [projects, setProjects] = useState(ProjectData);
-    const [selectedProject, setSelectedProject] = useState(null);
-    const [isTeamExpanded, setIsTeamExpanded] = useState(false); // Track if "Team" tab is expanded
+    const [isTeamExpanded, setIsTeamExpanded] = useState(false);
 
     const { projectName } = useParams();
     const navigate = useNavigate();
-    const project = ProjectData.find((p) => p.name === projectName);
+
+    // Find the current project
+    const project = projects.find((p) => p.name === projectName);
 
     const handleCloseForm = () => setShowForm(false);
 
     const handleAddMember = (memberName) => {
-        if (selectedProject) {
-            const updatedProjects = projects.map((project) =>
-                project.name === selectedProject.name
-                    ? { ...project, members: [...project.members, memberName] }
-                    : project
-            );
-
-            setProjects(updatedProjects);
-            setShowForm(false);
-        }
+        const updatedProjects = projects.map((p) =>
+            p.name === projectName
+                ? { ...p, members: [...p.members, memberName] }
+                : p
+        );
+        setProjects(updatedProjects);
+        setShowForm(false);
     };
 
     const handleTeamsClick = () => {
-        setIsTeamExpanded(!isTeamExpanded); // Toggle team members visibility
+        setIsTeamExpanded(!isTeamExpanded);
+    };
+
+    const handleTaskCompletion = (taskIndex) => {
+        const updatedTasks = project.tasks.map((task, index) =>
+            index === taskIndex ? { ...task, completed: !task.completed } : task
+        );
+        setProjects((prevProjects) =>
+            prevProjects.map((p) =>
+                p.name === projectName ? { ...p, tasks: updatedTasks } : p
+            )
+        );
     };
 
     if (!project) {
@@ -47,21 +55,21 @@ const ProjectDetailsPage = () => {
             <Navbar setSidebarOpen={setSidebarOpen} isSidebarOpen={isSidebarOpen} />
             <DashboardContainer style={{ display: "flex", width: "100%" }}>
                 {/* Sidebar */}
-                <Sidebar 
-                    isSidebarOpen={isSidebarOpen} 
-                    isProjectPage={true} 
-                    onTeamsClick={handleTeamsClick} // Pass the handler
-                    teamMembers={project.members} // Pass team members data
-                    isTeamExpanded={isTeamExpanded} // Pass expanded state
+                <Sidebar
+                    isSidebarOpen={isSidebarOpen}
+                    isProjectPage={true}
+                    onTeamsClick={handleTeamsClick}
+                    teamMembers={project.members}
+                    isTeamExpanded={isTeamExpanded}
                 />
 
                 {/* Main Content */}
-                <MainContent 
-                    isSidebarOpen={isSidebarOpen} 
+                <MainContent
+                    isSidebarOpen={isSidebarOpen}
                     style={{
                         marginTop: "20px",
-                        flexGrow: 1, 
-                        backgroundColor: "#121212", 
+                        flexGrow: 1,
+                        backgroundColor: "#121212",
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
@@ -71,17 +79,17 @@ const ProjectDetailsPage = () => {
                 >
                     <div
                         style={{
-                            width: "200%", 
+                            width: "200%",
                             maxWidth: "2000px",
                             backgroundColor: "#1A1A1A",
                             padding: "40px",
                             borderRadius: "15px",
-                            boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.4)", 
+                            boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.4)",
                             textAlign: "left",
-                            border: "1px solid rgba(255, 255, 255, 0.1)", 
-                            overflowY: "auto", // Add vertical scrollbar if content overflows
-                            maxHeight: "200vh", // Limit height to 80% of viewport height
-                            minHeight: "700px", // Ensure a minimum height
+                            border: "1px solid rgba(255, 255, 255, 0.1)",
+                            overflowY: "auto",
+                            maxHeight: "200vh",
+                            minHeight: "700px",
                         }}
                     >
                         {/* Project Details Section */}
@@ -96,73 +104,81 @@ const ProjectDetailsPage = () => {
                         <h3 style={{ color: "#FFCC00", marginBottom: "15px", fontSize: "22px", fontWeight: "600" }}>
                             Tasks
                         </h3>
-                        <div style={{ 
-                            display: "flex", // Change to flex
-                            flexDirection: "column", // Stack items vertically
-                            gap: "15px", // Add spacing between tasks
-                            marginBottom: "25px"
-                        }}>
+                        <div style={{ display: "flex", flexDirection: "column", gap: "15px", marginBottom: "25px" }}>
                             {project.tasks.map((task, index) => (
-                                <Link 
-                                    key={index} 
-                                    to={`/tasks/${task.name}`} // Link to the task details page
-                                    style={{ textDecoration: 'none', color: 'inherit' }} // Remove default link styling
+                                <Link
+                                    key={index}
+                                    to={`/tasks/${task.name}`}
+                                    style={{ textDecoration: "none", color: "inherit" }}
                                 >
-                                    <div style={{ 
-                                        backgroundColor: "rgba(255, 255, 255, 0.05)",
-                                        padding: "15px",
-                                        borderRadius: "8px",
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        justifyContent: "space-between",
-                                        transition: "transform 0.2s",
-                                        position: "relative", // For absolute positioning of icons
-                                    }}
-                                    onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.02)")}
-                                    onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
+                                    <div
+                                        style={{
+                                            backgroundColor: "rgba(255, 255, 255, 0.05)",
+                                            padding: "15px",
+                                            borderRadius: "8px",
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            justifyContent: "space-between",
+                                            transition: "transform 0.2s",
+                                            position: "relative",
+                                        }}
+                                        onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.02)")}
+                                        onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
                                     >
                                         {/* Task Name and Due Date */}
                                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                                            <span style={{ color: "#FFFFFF", fontSize: "18px", fontWeight: "500" }}>{task.name}</span>
+                                            <span style={{ color: "#FFFFFF", fontSize: "18px", fontWeight: "500" }}>
+                                                {task.name}
+                                            </span>
                                             <span style={{ color: "#FF4444", fontSize: "16px" }}>
-                                                Assigned to: {task.assignedMembers.join(", ")} {/* Display assigned members */}
+                                                Assigned to: {task.assignedMembers.join(", ")}
                                             </span>
                                             <span style={{ color: "#CCCCCC", fontSize: "14px" }}>{task.dueDate}</span>
                                         </div>
 
                                         {/* Progress Indicator */}
                                         <div style={{ marginTop: "10px" }}>
-                                            <div style={{ 
-                                                width: "100%",
-                                                height: "6px",
-                                                backgroundColor: "rgba(255, 255, 255, 0.1)",
-                                                borderRadius: "4px",
-                                                overflow: "hidden"
-                                            }}>
-                                                <div style={{ 
-                                                    width: `${task.progress || 0}%`, // Progress percentage
-                                                    height: "100%",
-                                                    backgroundColor: "#007BFF",
-                                                    borderRadius: "4px"
-                                                }}></div>
+                                            <div
+                                                style={{
+                                                    width: "100%",
+                                                    height: "6px",
+                                                    backgroundColor: "rgba(255, 255, 255, 0.1)",
+                                                    borderRadius: "4px",
+                                                    overflow: "hidden",
+                                                }}
+                                            >
+                                                <div
+                                                    style={{
+                                                        width: `${task.progress || 0}%`,
+                                                        height: "100%",
+                                                        backgroundColor: "#007BFF",
+                                                        borderRadius: "4px",
+                                                    }}
+                                                ></div>
                                             </div>
                                         </div>
 
                                         {/* Priority Level */}
                                         <div style={{ marginTop: "10px", display: "flex", alignItems: "center", gap: "8px" }}>
-                                            <span style={{ 
-                                                color: task.priority === "High" ? "#FF4444" : 
-                                                    task.priority === "Medium" ? "#FFCC00" : "#00C851",
-                                                fontSize: "14px",
-                                                fontWeight: "500"
-                                            }}>
+                                            <span
+                                                style={{
+                                                    color:
+                                                        task.priority === "High"
+                                                            ? "#FF4444"
+                                                            : task.priority === "Medium"
+                                                            ? "#FFCC00"
+                                                            : "#00C851",
+                                                    fontSize: "14px",
+                                                    fontWeight: "500",
+                                                }}
+                                            >
                                                 {task.priority || "Low"} Priority
                                             </span>
                                         </div>
 
                                         {/* Mark as Completed Button */}
-                                        <button 
-                                            style={{ 
+                                        <button
+                                            style={{
                                                 marginTop: "15px",
                                                 padding: "8px 12px",
                                                 backgroundColor: task.completed ? "#00C851" : "rgba(255, 255, 255, 0.1)",
@@ -173,13 +189,8 @@ const ProjectDetailsPage = () => {
                                                 transition: "background-color 0.3s, color 0.3s",
                                             }}
                                             onClick={(e) => {
-                                                e.preventDefault(); // Prevent navigation when clicking the button
-                                                const updatedTasks = project.tasks.map((t, i) => 
-                                                    i === index ? { ...t, completed: !t.completed } : t
-                                                );
-                                                setProjects(prevProjects => prevProjects.map(p => 
-                                                    p.name === project.name ? { ...p, tasks: updatedTasks } : p
-                                                ));
+                                                e.preventDefault();
+                                                handleTaskCompletion(index);
                                             }}
                                         >
                                             {task.completed ? "Completed" : "In Progress . . ."}
