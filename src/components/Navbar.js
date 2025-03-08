@@ -106,67 +106,96 @@ const Navbar = ({ setSidebarOpen, isSidebarOpen, handleLogout }) => {
         </NavItem>
 
         {/* Notification Button */}
-        <NavItem>
+        <NavItem style={{ position: "relative" }}>
           <NavLink
             onClick={toggleNotifications}
-            style={{ position: "relative", display: "flex", alignItems: "center" }}
+            style={{
+              position: "relative",
+              display: "flex",
+              alignItems: "center",
+              cursor: "pointer",
+              fontSize: "16px",
+              fontWeight: "500",
+              color: "#fff", // Navbar text color
+            }}
           >
-            <FaBell style={{ marginRight: "8px" }} />
+            <FaBell size={20} style={{ marginRight: "8px", color: "#fff" }} />
             Notifications
             {notifications.length > 0 && (
               <span
                 style={{
                   position: "absolute",
                   top: "-5px",
-                  right: "-5px",
+                  right: "-10px",
                   backgroundColor: "red",
-                  color: "white",
+                  color: "#fff",
                   borderRadius: "50%",
-                  padding: "2px 6px",
+                  padding: "4px 8px",
                   fontSize: "12px",
+                  fontWeight: "bold",
+                  boxShadow: "0 0 5px rgba(0, 0, 0, 0.3)",
                 }}
               >
                 {notifications.length}
               </span>
             )}
           </NavLink>
+
           {showNotifications && (
             <div
               style={{
                 position: "absolute",
                 top: "40px",
                 right: "0",
-                backgroundColor: "#fff",
-                border: "1px solid #ccc",
-                borderRadius: "5px",
-                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                backgroundColor: "#222", // Dark background for dropdown
+                border: "1px solid #444",
+                borderRadius: "8px",
+                boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
                 zIndex: 1000,
-                width: "250px",
+                width: "280px",
+                maxHeight: "300px",
+                overflowY: "auto",
+                color: "#fff", // White text for readability
               }}
             >
-              <div style={{ padding: "10px", fontWeight: "bold", borderBottom: "1px solid #ccc" }}>
+              <div
+                style={{
+                  padding: "12px",
+                  fontWeight: "bold",
+                  borderBottom: "1px solid #444",
+                  backgroundColor: "#333", // Slightly lighter header
+                  textAlign: "center",
+                }}
+              >
                 Notifications
               </div>
+
               {notifications.length > 0 ? (
                 notifications.map((notification, index) => (
                   <div
                     key={index}
                     style={{
-                      padding: "10px",
-                      borderBottom: "1px solid #eee",
+                      padding: "12px",
+                      borderBottom: "1px solid #444",
                       cursor: "pointer",
-                      ":hover": { backgroundColor: "#f9f9f9" },
+                      transition: "background 0.3s",
+                      fontSize: "14px",
                     }}
+                    onMouseEnter={(e) => (e.currentTarget.style.background = "#444")}
+                    onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
                   >
-                    {notification}
+                    {notification.message}
                   </div>
                 ))
               ) : (
-                <div style={{ padding: "10px", color: "#888" }}>No new notifications</div>
+                <div style={{ padding: "12px", color: "#bbb", textAlign: "center" }}>
+                  No new notifications
+                </div>
               )}
             </div>
           )}
         </NavItem>
+
 
         {/* Logout Link */}
         <NavItem>

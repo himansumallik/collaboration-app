@@ -212,7 +212,7 @@ export const ProjectTile = styled.div`
 
 
 export const TileContainer = styled.div`
-  background: rgba(70, 68, 68, 0.3);
+  background: rgba(121, 77, 150, 0.44);
   padding: 1.5rem;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(90, 88, 88, 0.3);
