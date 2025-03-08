@@ -20,7 +20,6 @@ const Dashboard = () => {
   const [projects, setProjects] = useState(ProjectData);
   const [selectedProject, setSelectedProject] = useState(null);
 
-
   const handleCloseForm = () => setShowForm(false);
 
   const handleAddMember = (memberName) => {
@@ -42,7 +41,7 @@ const Dashboard = () => {
       <DashboardContainer>
         <Sidebar isSidebarOpen={isSidebarOpen} />
         <MainContent isSidebarOpen={isSidebarOpen} style={{ marginTop: "60px", textAlign: "center" }}>
-          <h2 style={{ color: "#fff", marginBottom: "1.5rem", width: "100%" }}>Projects</h2>
+          <h2 style={{ color: "#FFFFFF", marginBottom: "1.5rem", width: "100%" }}>Projects</h2>
           <ProjectsContainer>
             {projects.map((project, index) => (
               <ProjectTile
@@ -59,8 +58,8 @@ const Dashboard = () => {
             position: "fixed",
             bottom: "80px",
             right: "70px",
-            backgroundColor: "black",
-            color: "white",
+            backgroundColor: "#121212", // Dark Gray
+            color: "#FFFFFF", // White
             borderRadius: "50%",
             width: "70px",
             height: "70px",
@@ -68,7 +67,7 @@ const Dashboard = () => {
             justifyContent: "center",
             alignItems: "center",
             cursor: "pointer",
-            boxShadow: "0px 0px 50px 2px rgba(243, 109, 69, 0.84)",
+            boxShadow: "0px 0px 50px 2px rgba(255, 99, 71, 0.84)", // Orange glow
             transition: "transform 0.3s ease-in-out",
           }}
           className="floating-button"
@@ -76,7 +75,7 @@ const Dashboard = () => {
           onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.2)")}
           onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
         >
-          <CiSquarePlus style={{ width: "50px", height: "50px", color: "orange" }} />
+          <CiSquarePlus style={{ width: "50px", height: "50px", color: "#FF6347" }} /> {/* Orange */}
         </div>
         {showForm && <AddProjectMemberForm onAddMember={handleAddMember} onClose={handleCloseForm} />}
       </DashboardContainer>

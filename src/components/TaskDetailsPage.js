@@ -123,15 +123,15 @@ const TaskDetailsPage = () => {
     // Styles for responsive design
     const styles = {
         container: {
-            backgroundColor: '#121212',
-            color: '#fff',
+            backgroundColor: '#121212', // Dark Gray
+            color: '#fff', // White
             width: '100%',
             minHeight: '100vh',
             padding: '20px',
             position: 'relative', // Ensure the back icon is positioned correctly
         },
         heading: {
-            color: 'orange',
+            color: '#FFCC00', // Gold
             marginBottom: '20px',
             display: 'flex',
             alignItems: 'center',
@@ -140,22 +140,22 @@ const TaskDetailsPage = () => {
             cursor: 'pointer',
             marginRight: '20px',
             fontSize: '24px',
-            color: '#fff',
+            color: '#fff', // White
             transition: 'color 0.3s',
             ':hover': {
-                color: '#007bff', // Change color on hover
+                color: '#007bff', // Sky Blue
             },
         },
         taskName: {
-            color: '#fff',
+            color: '#fff', // White
             marginBottom: '15px',
             fontSize: '28px',
             fontWeight: 'bold',
         },
         button: {
             padding: '10px 20px',
-            backgroundColor: '#007bff',
-            color: '#fff',
+            backgroundColor: '#007bff', // Sky Blue
+            color: '#fff', // White
             border: 'none',
             borderRadius: '5px',
             cursor: 'pointer',
@@ -168,7 +168,7 @@ const TaskDetailsPage = () => {
             marginTop: '20px',
         },
         fileItem: {
-            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+            backgroundColor: 'rgba(255, 255, 255, 0.1)', // Light Gray with opacity
             padding: '10px',
             borderRadius: '5px',
             textAlign: 'center',
@@ -182,8 +182,8 @@ const TaskDetailsPage = () => {
                 <FaArrowLeft
                     style={styles.backIcon}
                     onClick={handleBack}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = '#007bff')}
-                    onMouseLeave={(e) => (e.currentTarget.style.color = '#fff')}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = '#007bff')} // Sky Blue
+                    onMouseLeave={(e) => (e.currentTarget.style.color = '#fff')} // White
                 />
                 <h1>Task Details</h1>
             </div>
@@ -202,7 +202,6 @@ const TaskDetailsPage = () => {
             </p>
 
             {/* Progress */}
-
             <div style={{ marginBottom: '15px' }}>
                 <strong>Progress:</strong>
                 <input
@@ -220,8 +219,9 @@ const TaskDetailsPage = () => {
             <p style={{ color: '#ccc', marginBottom: '15px', fontSize: '18px' }}>
                 <strong>Priority:</strong>
                 <span style={{
-                    color: task.priority === 'High' ? '#ff4444' :
-                        task.priority === 'Medium' ? '#ffcc00' : '#00c851',
+                    color: task.priority === 'High' ? '#ff4444' : // Coral
+                        task.priority === 'Medium' ? '#ffcc00' : // Gold
+                        '#00c851', // Teal
                     marginLeft: '8px',
                 }}>
                     {task.priority || 'Low'}
@@ -246,9 +246,9 @@ const TaskDetailsPage = () => {
                     style={{
                         width: '100%',
                         height: '100px',
-                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                        color: '#fff',
-                        border: '1px solid rgba(255, 255, 255, 0.2)',
+                        backgroundColor: 'rgba(255, 255, 255, 0.1)', // Light Gray with opacity
+                        color: '#fff', // White
+                        border: '1px solid rgba(255, 255, 255, 0.2)', // Light Gray with opacity
                         borderRadius: '5px',
                         padding: '10px',
                         marginTop: '5px',
@@ -261,8 +261,8 @@ const TaskDetailsPage = () => {
                     style={{
                         marginTop: '10px',
                         padding: '10px 20px',
-                        backgroundColor: '#007bff',
-                        color: '#fff',
+                        backgroundColor: '#007bff', // Sky Blue
+                        color: '#fff', // White
                         border: 'none',
                         borderRadius: '5px',
                         cursor: 'pointer',
@@ -286,13 +286,13 @@ const TaskDetailsPage = () => {
                     </ul>
                 </div>
             )}
-            
+
             {/* Actions */}
             <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
                 <button
                     style={{
                         ...styles.button,
-                        backgroundColor: task.completed ? '#00c851' : '#007bff',
+                        backgroundColor: task.completed ? '#00c851' : '#007bff', // Teal or Sky Blue
                     }}
                     onClick={handleMarkAsCompleted}
                 >
@@ -328,8 +328,8 @@ const TaskDetailsPage = () => {
                             <button
                                 style={{
                                     marginTop: '5px',
-                                    backgroundColor: '#ff4444',
-                                    color: '#fff',
+                                    backgroundColor: '#ff4444', // Coral
+                                    color: '#fff', // White
                                     border: 'none',
                                     borderRadius: '5px',
                                     padding: '5px 10px',

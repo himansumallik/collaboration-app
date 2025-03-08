@@ -58,7 +58,7 @@ const Navbar = ({ setSidebarOpen, isSidebarOpen, handleLogout }) => {
             cursor: "pointer",
             fontSize: "24px",
             fontWeight: "bold",
-            color: "#ff6347",
+            color: "#FFCC00", // Gold
             textShadow: "2px 2px 4px rgba(0, 0, 0, 0.3)",
             padding: "10px 20px",
             borderRadius: "10px",
@@ -66,13 +66,13 @@ const Navbar = ({ setSidebarOpen, isSidebarOpen, handleLogout }) => {
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.transform = "translateY(-2px)";
-            e.currentTarget.style.boxShadow = "0 6px 12px rgba(216, 119, 8, 0.5)";
-            e.currentTarget.style.color = "#ff4500";
+            e.currentTarget.style.boxShadow = "0 6px 12px rgba(255, 204, 0, 0.5)"; // Gold shadow
+            e.currentTarget.style.color = "#FF6347"; // Orange
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.transform = "translateY(0)";
             e.currentTarget.style.boxShadow = "0 4px 6px rgba(86, 90, 95, 0.05)";
-            e.currentTarget.style.color = "#ff6347";
+            e.currentTarget.style.color = "#FFCC00"; // Gold
           }}
         >
           Collaboration App
@@ -83,9 +83,9 @@ const Navbar = ({ setSidebarOpen, isSidebarOpen, handleLogout }) => {
         <NavItem>
           <NavLink
             onClick={() => navigate("/home")}
-            style={{ color: location.pathname === "/home" ? "#ff6347" : "inherit" }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "#ff6347")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = location.pathname === "/home" ? "#ff6347" : "inherit")}
+            style={{ color: location.pathname === "/home" ? "#FF6347" : "#FFFFFF" }} // Orange or White
+            onMouseEnter={(e) => (e.currentTarget.style.color = "#FF6347")} // Orange
+            onMouseLeave={(e) => (e.currentTarget.style.color = location.pathname === "/home" ? "#FF6347" : "#FFFFFF")} // Orange or White
           >
             <FaHome style={{ marginRight: "8px" }} />
             Home
@@ -96,9 +96,9 @@ const Navbar = ({ setSidebarOpen, isSidebarOpen, handleLogout }) => {
         <NavItem>
           <NavLink
             onClick={() => navigate("/profile")}
-            style={{ color: location.pathname === "/profile" ? "#ff6347" : "inherit" }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "#ff6347")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = location.pathname === "/profile" ? "#ff6347" : "inherit")}
+            style={{ color: location.pathname === "/profile" ? "#FF6347" : "#FFFFFF" }} // Orange or White
+            onMouseEnter={(e) => (e.currentTarget.style.color = "#FF6347")} // Orange
+            onMouseLeave={(e) => (e.currentTarget.style.color = location.pathname === "/profile" ? "#FF6347" : "#FFFFFF")} // Orange or White
           >
             <FaUserCircle style={{ marginRight: "8px" }} />
             Profile
@@ -116,10 +116,10 @@ const Navbar = ({ setSidebarOpen, isSidebarOpen, handleLogout }) => {
               cursor: "pointer",
               fontSize: "16px",
               fontWeight: "500",
-              color: "#fff", // Navbar text color
+              color: "#FFFFFF", // White
             }}
           >
-            <FaBell size={20} style={{ marginRight: "8px", color: "#fff" }} />
+            <FaBell size={20} style={{ marginRight: "8px", color: "#FFFFFF" }} />
             Notifications
             {notifications.length > 0 && (
               <span
@@ -127,8 +127,8 @@ const Navbar = ({ setSidebarOpen, isSidebarOpen, handleLogout }) => {
                   position: "absolute",
                   top: "-5px",
                   right: "-10px",
-                  backgroundColor: "red",
-                  color: "#fff",
+                  backgroundColor: "#FF4444", // Coral
+                  color: "#FFFFFF", // White
                   borderRadius: "50%",
                   padding: "4px 8px",
                   fontSize: "12px",
@@ -147,22 +147,22 @@ const Navbar = ({ setSidebarOpen, isSidebarOpen, handleLogout }) => {
                 position: "absolute",
                 top: "40px",
                 right: "0",
-                backgroundColor: "#222", // Dark background for dropdown
-                border: "1px solid #444",
+                backgroundColor: "#1A1A1A", // Charcoal
+                border: "1px solid #2C2C2C", // Dark Gray
                 borderRadius: "8px",
                 boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
                 zIndex: 1000,
                 width: "280px",
                 maxHeight: "300px",
                 overflowY: "auto",
-                color: "#fff", // White text for readability
+                color: "#FFFFFF", // White
               }}
             >
               <div
                 style={{
                   padding: "12px",
                   fontWeight: "bold",
-                  borderBottom: "1px solid #444",
+                  borderBottom: "1px solid #2C2C2C", // Dark Gray
                   backgroundColor: "#333", // Slightly lighter header
                   textAlign: "center",
                 }}
@@ -176,19 +176,19 @@ const Navbar = ({ setSidebarOpen, isSidebarOpen, handleLogout }) => {
                     key={index}
                     style={{
                       padding: "12px",
-                      borderBottom: "1px solid #444",
+                      borderBottom: "1px solid #2C2C2C", // Dark Gray
                       cursor: "pointer",
                       transition: "background 0.3s",
                       fontSize: "14px",
                     }}
-                    onMouseEnter={(e) => (e.currentTarget.style.background = "#444")}
+                    onMouseEnter={(e) => (e.currentTarget.style.background = "#444")} // Darker Gray
                     onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
                   >
-                    {notification.message}
+                    {notification}
                   </div>
                 ))
               ) : (
-                <div style={{ padding: "12px", color: "#bbb", textAlign: "center" }}>
+                <div style={{ padding: "12px", color: "#CCCCCC", textAlign: "center" }}>
                   No new notifications
                 </div>
               )}
@@ -196,14 +196,13 @@ const Navbar = ({ setSidebarOpen, isSidebarOpen, handleLogout }) => {
           )}
         </NavItem>
 
-
         {/* Logout Link */}
         <NavItem>
           <NavLink
             onClick={confirmLogout}
-            onMouseOver={(e) => (e.currentTarget.style.color = "black")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "orange")}
-            style={{ color: "red", display: "flex", alignItems: "center" }}
+            onMouseOver={(e) => (e.currentTarget.style.color = "#FF6347")} // Orange
+            onMouseLeave={(e) => (e.currentTarget.style.color = "#FF4444")} // Coral
+            style={{ color: "#FF4444", display: "flex", alignItems: "center" }} // Coral
           >
             <FaSignOutAlt style={{ marginRight: "8px" }} />
             Logout
@@ -214,87 +213,55 @@ const Navbar = ({ setSidebarOpen, isSidebarOpen, handleLogout }) => {
       {/* Logout Confirmation Modal */}
       {showLogoutModal && (
         <div style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            zIndex: 1000,
-            backdropFilter: "blur(8px)", // Glass effect
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          zIndex: 1000,
         }}>
-            <div style={{
-                background: "rgba(255, 255, 255, 0.1)",
-                padding: "30px",
-                borderRadius: "15px",
-                textAlign: "center",
-                color: "#fff",
-                boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.3)",
-                minWidth: "320px",
-                border: "1px solid rgba(255, 255, 255, 0.2)",
-                backdropFilter: "blur(15px)", // Frosted glass effect
-                animation: "fadeIn 0.3s ease-in-out"
-            }}>
-                <p style={{
-                    fontSize: "20px",
-                    marginBottom: "20px",
-                    fontWeight: "600",
-                    letterSpacing: "0.5px"
-                }}>
-                    Are you sure you want to logout?
-                </p>
-                <div style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    gap: "15px"
-                }}>
-                    <button 
-                        onClick={handleLogoutConfirm}
-                        style={{
-                            background: "linear-gradient(135deg,rgb(241, 134, 101),rgb(236, 116, 61))",
-                            color: "#fff",
-                            border: "none",
-                            padding: "12px 24px",
-                            borderRadius: "10px",
-                            cursor: "pointer",
-                            fontSize: "16px",
-                            fontWeight: "bold",
-                            transition: "transform 0.2s, background 0.3s",
-                            boxShadow: "0px 4px 10px rgba(255, 118, 136, 0.3)",
-                        }}
-                        onMouseOver={(e) => e.target.style.transform = "scale(1.05)"}
-                        onMouseOut={(e) => e.target.style.transform = "scale(1)"}
-                    >
-                        Yes, Logout
-                    </button>
-                    <button 
-                        onClick={() => setShowLogoutModal(false)}
-                        style={{
-                            background: "linear-gradient(135deg, #6a85b6, #bac8e0)",
-                            color: "#fff",
-                            border: "none",
-                            padding: "12px 24px",
-                            borderRadius: "10px",
-                            cursor: "pointer",
-                            fontSize: "16px",
-                            fontWeight: "bold",
-                            transition: "transform 0.2s, background 0.3s",
-                            boxShadow: "0px 4px 10px rgba(106, 133, 182, 0.3)",
-                        }}
-                        onMouseOver={(e) => e.target.style.transform = "scale(1.05)"}
-                        onMouseOut={(e) => e.target.style.transform = "scale(1)"}
-                    >
-                        Cancel
-                    </button>
-                </div>
-            </div>
+          <div style={{
+            backgroundColor: "#1A1A1A", // Charcoal
+            padding: "20px",
+            borderRadius: "10px",
+            textAlign: "center",
+            color: "#FFFFFF", // White
+          }}>
+            <p>Are you sure you want to logout?</p>
+            <button
+              onClick={handleLogoutConfirm}
+              style={{
+                backgroundColor: "#FF6347", // Orange
+                color: "#FFFFFF", // White
+                border: "none",
+                padding: "10px 20px",
+                borderRadius: "5px",
+                cursor: "pointer",
+                marginRight: "10px",
+              }}
+            >
+              Yes
+            </button>
+            <button
+              onClick={() => setShowLogoutModal(false)}
+              style={{
+                backgroundColor: "#2C2C2C", // Dark Gray
+                color: "#FFFFFF", // White
+                border: "none",
+                padding: "10px 20px",
+                borderRadius: "5px",
+                cursor: "pointer",
+              }}
+            >
+              No
+            </button>
+          </div>
         </div>
-    )}
-
-
+      )}
     </NavbarContainer>
   );
 };

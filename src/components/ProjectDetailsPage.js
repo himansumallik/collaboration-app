@@ -39,7 +39,7 @@ const ProjectDetailsPage = () => {
     };
 
     if (!project) {
-        return <h2 style={{ color: "white" }}>Project not found</h2>;
+        return <h2 style={{ color: "#FFFFFF" }}>Project not found</h2>;
     }
 
     return (
@@ -85,15 +85,15 @@ const ProjectDetailsPage = () => {
                         }}
                     >
                         {/* Project Details Section */}
-                        <h2 style={{ color: "orange", marginBottom: "15px", fontSize: "40px", fontWeight: "bold" }}>
+                        <h2 style={{ color: "#FF6347", marginBottom: "15px", fontSize: "40px", fontWeight: "bold" }}>
                             {project.name}
                         </h2>
-                        <p style={{ color: "#ccc", marginBottom: "25px", fontSize: "25px", lineHeight: "1.6" }}>
+                        <p style={{ color: "#CCCCCC", marginBottom: "25px", fontSize: "25px", lineHeight: "1.6" }}>
                             {project.description}
                         </p>
 
                         {/* Tasks Section */}
-                        <h3 style={{ color: "#ffcc00", marginBottom: "15px", fontSize: "22px", fontWeight: "600" }}>
+                        <h3 style={{ color: "#FFCC00", marginBottom: "15px", fontSize: "22px", fontWeight: "600" }}>
                             Tasks
                         </h3>
                         <div style={{ 
@@ -123,11 +123,11 @@ const ProjectDetailsPage = () => {
                                     >
                                         {/* Task Name and Due Date */}
                                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                                            <span style={{ color: "#fff", fontSize: "18px", fontWeight: "500" }}>{task.name}</span>
-                                            <span style={{ color: "rgb(235, 125, 91)", fontSize: "16px" }}>
+                                            <span style={{ color: "#FFFFFF", fontSize: "18px", fontWeight: "500" }}>{task.name}</span>
+                                            <span style={{ color: "#FF4444", fontSize: "16px" }}>
                                                 Assigned to: {task.assignedMembers.join(", ")} {/* Display assigned members */}
                                             </span>
-                                            <span style={{ color: "#ccc", fontSize: "14px" }}>{task.dueDate}</span>
+                                            <span style={{ color: "#CCCCCC", fontSize: "14px" }}>{task.dueDate}</span>
                                         </div>
 
                                         {/* Progress Indicator */}
@@ -142,7 +142,7 @@ const ProjectDetailsPage = () => {
                                                 <div style={{ 
                                                     width: `${task.progress || 0}%`, // Progress percentage
                                                     height: "100%",
-                                                    backgroundColor: "#007bff",
+                                                    backgroundColor: "#007BFF",
                                                     borderRadius: "4px"
                                                 }}></div>
                                             </div>
@@ -151,8 +151,8 @@ const ProjectDetailsPage = () => {
                                         {/* Priority Level */}
                                         <div style={{ marginTop: "10px", display: "flex", alignItems: "center", gap: "8px" }}>
                                             <span style={{ 
-                                                color: task.priority === "High" ? "#ff4444" : 
-                                                    task.priority === "Medium" ? "#ffcc00" : "#00c851",
+                                                color: task.priority === "High" ? "#FF4444" : 
+                                                    task.priority === "Medium" ? "#FFCC00" : "#00C851",
                                                 fontSize: "14px",
                                                 fontWeight: "500"
                                             }}>
@@ -165,8 +165,8 @@ const ProjectDetailsPage = () => {
                                             style={{ 
                                                 marginTop: "15px",
                                                 padding: "8px 12px",
-                                                backgroundColor: task.completed ? "#00c851" : "rgba(255, 255, 255, 0.1)",
-                                                color: task.completed ? "#fff" : "#ccc",
+                                                backgroundColor: task.completed ? "#00C851" : "rgba(255, 255, 255, 0.1)",
+                                                color: task.completed ? "#FFFFFF" : "#CCCCCC",
                                                 border: "none",
                                                 borderRadius: "6px",
                                                 cursor: "pointer",
@@ -197,8 +197,8 @@ const ProjectDetailsPage = () => {
                         position: "fixed",
                         bottom: "80px",
                         right: "70px",
-                        backgroundColor: "black",
-                        color: "white",
+                        backgroundColor: "#121212",
+                        color: "#FFFFFF",
                         borderRadius: "50%",
                         width: "70px",
                         height: "70px",
@@ -214,7 +214,7 @@ const ProjectDetailsPage = () => {
                     onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.2)")}
                     onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
                 >
-                    <CiSquarePlus style={{ width: "50px", height: "50px", color: "orange" }} />
+                    <CiSquarePlus style={{ width: "50px", height: "50px", color: "#FF6347" }} />
                 </div>
                 {showForm && <AddProjectMemberForm onAddMember={handleAddMember} onClose={handleCloseForm} />}
             </DashboardContainer>
