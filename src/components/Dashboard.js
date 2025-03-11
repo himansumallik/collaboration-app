@@ -39,7 +39,7 @@ const Dashboard = () => {
     <div>
       <Navbar setSidebarOpen={setSidebarOpen} isSidebarOpen={isSidebarOpen} />
       <DashboardContainer>
-        <Sidebar isSidebarOpen={isSidebarOpen} />
+        <Sidebar isSidebarOpen={true} />
         <MainContent isSidebarOpen={isSidebarOpen} style={{ marginTop: "60px", textAlign: "center" }}>
           <h2 style={{ color: "#FFFFFF", marginBottom: "1.5rem", width: "100%" }}>Projects</h2>
           <ProjectsContainer>

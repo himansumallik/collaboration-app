@@ -133,7 +133,7 @@ export const Sidebar = styled.div`
   height: 100vh;
   background-color: #1A1A1A; // Charcoal
   color: #FFFFFF; // White
-  display: flex;
+  display: ${(props) => (props.$isSidebarOpen ? "block" : "none")};
   flex-direction: column;
 `;
 
@@ -255,3 +255,26 @@ export const ProjectStatus = styled.span`
   font-size: 0.9rem;
   text-transform: uppercase;
 `;
+
+export const modalOverlay = {
+  position: "fixed",
+  top: "0",
+  left: "0",
+  width: "100vw",
+  height: "100vh",
+  backgroundColor: "rgba(0, 0, 0, 0.5)", // Adds a dim background effect
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  zIndex: 1000, // Ensures it appears above everything
+};
+
+export const modalContent = {
+  backgroundColor: "#222",
+  padding: "30px",
+  borderRadius: "10px",
+  width: "500px",
+  boxShadow: "0 0 20px rgba(255, 255, 255, 0.3)",
+};
+
+

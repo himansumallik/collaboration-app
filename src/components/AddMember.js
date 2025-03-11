@@ -1,81 +1,134 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import Modal from "react-modal";
 
-const AddMember = ({ teamMembers, setTeamMembers }) => {
-const [showAddMemberForm, setShowAddMemberForm] = useState(false);
-const [newMemberName, setNewMemberName] = useState('');
+Modal.setAppElement("#root"); // Set the root element for accessibility
 
-const handleAddMember = () => {
-    if (newMemberName.trim()) {
-    // Check for duplicates
-    if (!teamMembers.includes(newMemberName.trim())) {
-        setTeamMembers([...teamMembers, newMemberName.trim()]);
-        setNewMemberName(''); // Clear input
-        setShowAddMemberForm(false); // Close form
-    } else {
-        alert('Member already exists!');
-    }
-    }
-};
+const AddMember = ({ projectData, setProjectData, selectedProjectIndex }) => {
+    const [showAddMemberForm, setShowAddMemberForm] = useState(false);
+    const [newMemberName, setNewMemberName] = useState("");
 
-return (
-    <div style={{ marginLeft: '20px' }}>
-    {/* Button to open form */}
-    <div
-        onClick={() => setShowAddMemberForm(true)}
-        style={{ cursor: 'pointer', color: '#00C851' }} // Teal color
-    >
-        <span style={{ marginRight: '5px' }}>+</span> Add Member
-    </div>
+    const handleAddMember = () => {
+        console.log("member to be added");
+        if (!newMemberName.trim()) return;
 
-    {/* Form to add a new member */}
-    {showAddMemberForm && (
-        <div style={{ marginTop: '10px' }}>
-        <input
-            type="text"
-            placeholder="Enter member name"
-            style={{
-            padding: '5px',
-            borderRadius: '4px',
-            border: '1px solid #2C2C2C',
-            backgroundColor: '#1A1A1A',
-            color: '#FFFFFF',
-            marginRight: '10px',
-            }}
-            value={newMemberName}
-            onChange={(e) => setNewMemberName(e.target.value)}
-            aria-label="Enter member name"
-        />
-        <button
-            onClick={handleAddMember}
-            style={{
-            padding: '5px 10px',
-            borderRadius: '4px',
-            border: 'none',
-            backgroundColor: '#FF6347',
-            color: '#FFFFFF',
-            cursor: 'pointer',
-            }}
-        >
-            Add
-        </button>
-        <button
-            onClick={() => setShowAddMemberForm(false)}
-            style={{
-            padding: '5px 10px',
-            borderRadius: '4px',
-            border: 'none',
-            backgroundColor: '#2C2C2C',
-            color: '#FFFFFF',
-            cursor: 'pointer',
-            marginLeft: '10px',
-            }}
-        >
-            Cancel
-        </button>
+        const updatedProjects = [...projectData];
+        const project = updatedProjects[selectedProjectIndex];
+
+        if (project.members.includes(newMemberName.trim())) {
+            alert("Member already exists in this project!");
+            return;
+        }
+
+        if (project.members.length >= 6) {
+            alert("Cannot add more than 6 members!");
+            return;
+        }
+
+        project.members.push(newMemberName.trim());
+        setProjectData(updatedProjects);
+
+        setNewMemberName("");
+        setShowAddMemberForm(false);
+    };
+
+    return (
+        <div>
+            {/* Button to open modal */}
+            <div
+                onClick={() => setShowAddMemberForm(true)}
+                style={{
+                    cursor: "pointer",
+                    color: "#00C851",
+                    marginLeft: "20px",
+                    fontSize: "18px",
+                    fontWeight: "bold",
+                }}
+            >
+                <span style={{ marginRight: "5px" }}>+</span> Add Member
+            </div>
+
+            {/* Modal */}
+            <Modal
+                isOpen={showAddMemberForm}
+                onRequestClose={() => setShowAddMemberForm(false)}
+                style={{
+                    overlay: {
+                        position: "fixed",
+                        top: 0,
+                        left: 0,
+                        width: "100vw",
+                        height: "100vh",
+                        backgroundColor: "rgba(0, 0, 0, 0.5)", // Adds a dim background effect
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        zIndex: 1000,
+                    },
+                    content: {
+                        backgroundColor: "#222",
+                        padding: "30px",
+                        borderRadius: "10px",
+                        width: "500px",
+                        boxShadow: "0 0 20px rgba(255, 255, 255, 0.3)",
+                        position: "relative",
+                        inset: "unset",
+                    },
+                }}
+            >
+                <h2 style={{ color: "#FFFFFF", textAlign: "center", marginBottom: "20px" }}>
+                    Add New Member
+                </h2>
+                <input
+                    type="text"
+                    placeholder="Enter member name..."
+                    style={{
+                        padding: "12px",
+                        borderRadius: "5px",
+                        border: "none",
+                        backgroundColor: "#333",
+                        color: "#FFFFFF",
+                        width: "100%",
+                        marginBottom: "20px",
+                        fontSize: "16px",
+                    }}
+                    value={newMemberName}
+                    onChange={(e) => setNewMemberName(e.target.value)}
+                />
+                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                    <button
+                        onClick={() => setShowAddMemberForm(false)}
+                        style={{
+                            padding: "10px 18px",
+                            borderRadius: "5px",
+                            border: "none",
+                            backgroundColor: "#555",
+                            color: "#FFFFFF",
+                            cursor: "pointer",
+                            flex: 1,
+                            marginRight: "10px",
+                        }}
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        onClick={handleAddMember}
+                        style={{
+                            padding: "10px 18px",
+                            borderRadius: "5px",
+                            border: "none",
+                            backgroundColor: "#FF4500",
+                            color: "#FFFFFF",
+                            cursor: "pointer",
+                            fontWeight: "bold",
+                            flex: 1,
+                        }}
+                    >
+                        Add Member
+                    </button>
+                </div>
+            </Modal>
         </div>
-    )}
-    </div>
-);
+    );
 };
 
 export default AddMember;
