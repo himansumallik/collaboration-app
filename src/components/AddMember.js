@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
+import projectData from "../database/ProjectData"; // Import the projectData.js file
 
-Modal.setAppElement("#root"); // Set the root element for accessibility
+Modal.setAppElement("#root");
 
-const AddMember = ({ projectData, setProjectData, selectedProjectIndex }) => {
+const AddMember = ({ setProjectData, selectedProjectIndex }) => {
     const [showAddMemberForm, setShowAddMemberForm] = useState(false);
     const [newMemberName, setNewMemberName] = useState("");
 
     const handleAddMember = () => {
-        console.log("member to be added");
         if (!newMemberName.trim()) return;
 
-        const updatedProjects = [...projectData];
+        const updatedProjects = [...projectData]; // Clone projectData
         const project = updatedProjects[selectedProjectIndex];
 
         if (project.members.includes(newMemberName.trim())) {
@@ -25,7 +25,10 @@ const AddMember = ({ projectData, setProjectData, selectedProjectIndex }) => {
         }
 
         project.members.push(newMemberName.trim());
-        setProjectData(updatedProjects);
+        setProjectData(updatedProjects); // Update React state
+
+        // Persist to localStorage (or API if you have a backend)
+        localStorage.setItem("projectData", JSON.stringify(updatedProjects));
 
         setNewMemberName("");
         setShowAddMemberForm(false);
@@ -33,7 +36,6 @@ const AddMember = ({ projectData, setProjectData, selectedProjectIndex }) => {
 
     return (
         <div>
-            {/* Button to open modal */}
             <div
                 onClick={() => setShowAddMemberForm(true)}
                 style={{
@@ -47,7 +49,6 @@ const AddMember = ({ projectData, setProjectData, selectedProjectIndex }) => {
                 <span style={{ marginRight: "5px" }}>+</span> Add Member
             </div>
 
-            {/* Modal */}
             <Modal
                 isOpen={showAddMemberForm}
                 onRequestClose={() => setShowAddMemberForm(false)}
@@ -58,7 +59,7 @@ const AddMember = ({ projectData, setProjectData, selectedProjectIndex }) => {
                         left: 0,
                         width: "100vw",
                         height: "100vh",
-                        backgroundColor: "rgba(0, 0, 0, 0.5)", // Adds a dim background effect
+                        backgroundColor: "rgba(0, 0, 0, 0.5)",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
