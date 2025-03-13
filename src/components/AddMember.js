@@ -1,17 +1,49 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
-import projectData from "../database/ProjectData"; // Import the projectData.js file
+import projectData from "../database/ProjectData";
 
 Modal.setAppElement("#root");
 
 const AddMember = ({ setProjectData, selectedProjectIndex }) => {
     const [showAddMemberForm, setShowAddMemberForm] = useState(false);
     const [newMemberName, setNewMemberName] = useState("");
+    const [filteredSuggestions, setFilteredSuggestions] = useState([]);
+    const [showSuggestions, setShowSuggestions] = useState(false);
+
+    const allPossibleMembers = [
+        "Alice Johnson",
+        "Bob Smith",
+        "Charlie Brown",
+        "David Lee",
+        "Emma Watson",
+        "Franklin Harris",
+        "Grace Kelly",
+        "Henry Ford",
+    ];
+
+    const handleInputChange = (e) => {
+        const input = e.target.value;
+        setNewMemberName(input);
+        if (input.trim()) {
+            const suggestions = allPossibleMembers.filter((name) =>
+                name.toLowerCase().includes(input.toLowerCase())
+            );
+            setFilteredSuggestions(suggestions);
+            setShowSuggestions(true);
+        } else {
+            setShowSuggestions(false);
+        }
+    };
+
+    const handleSelectSuggestion = (name) => {
+        setNewMemberName(name);
+        setShowSuggestions(false);
+    };
 
     const handleAddMember = () => {
         if (!newMemberName.trim()) return;
 
-        const updatedProjects = [...projectData]; // Clone projectData
+        const updatedProjects = [...projectData];
         const project = updatedProjects[selectedProjectIndex];
 
         if (project.members.includes(newMemberName.trim())) {
@@ -25,9 +57,7 @@ const AddMember = ({ setProjectData, selectedProjectIndex }) => {
         }
 
         project.members.push(newMemberName.trim());
-        setProjectData(updatedProjects); // Update React state
-
-        // Persist to localStorage (or API if you have a backend)
+        setProjectData(updatedProjects);
         localStorage.setItem("projectData", JSON.stringify(updatedProjects));
 
         setNewMemberName("");
@@ -38,13 +68,7 @@ const AddMember = ({ setProjectData, selectedProjectIndex }) => {
         <div>
             <div
                 onClick={() => setShowAddMemberForm(true)}
-                style={{
-                    cursor: "pointer",
-                    color: "#00C851",
-                    marginLeft: "20px",
-                    fontSize: "18px",
-                    fontWeight: "bold",
-                }}
+                style={{ cursor: "pointer", color: "#00C851", marginLeft: "20px", fontSize: "18px", fontWeight: "bold" }}
             >
                 <span style={{ marginRight: "5px" }}>+</span> Add Member
             </div>
@@ -54,16 +78,10 @@ const AddMember = ({ setProjectData, selectedProjectIndex }) => {
                 onRequestClose={() => setShowAddMemberForm(false)}
                 style={{
                     overlay: {
-                        position: "fixed",
-                        top: 0,
-                        left: 0,
-                        width: "100vw",
-                        height: "100vh",
                         backgroundColor: "rgba(0, 0, 0, 0.5)",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        zIndex: 1000,
                     },
                     content: {
                         backgroundColor: "#222",
@@ -76,26 +94,60 @@ const AddMember = ({ setProjectData, selectedProjectIndex }) => {
                     },
                 }}
             >
-                <h2 style={{ color: "#FFFFFF", textAlign: "center", marginBottom: "20px" }}>
-                    Add New Member
-                </h2>
-                <input
-                    type="text"
-                    placeholder="Enter member name..."
-                    style={{
-                        padding: "12px",
-                        borderRadius: "5px",
-                        border: "none",
-                        backgroundColor: "#333",
-                        color: "#FFFFFF",
-                        width: "100%",
-                        marginBottom: "20px",
-                        fontSize: "16px",
-                    }}
-                    value={newMemberName}
-                    onChange={(e) => setNewMemberName(e.target.value)}
-                />
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <h2 style={{ color: "#FFFFFF", textAlign: "center", marginBottom: "20px" }}>Add New Member</h2>
+                <div style={{ position: "relative" }}>
+                    <input
+                        type="text"
+                        placeholder="Enter member name..."
+                        value={newMemberName}
+                        onChange={handleInputChange}
+                        style={{
+                            padding: "12px",
+                            borderRadius: "5px",
+                            border: "none",
+                            backgroundColor: "#333",
+                            color: "#FFFFFF",
+                            width: "100%",
+                            fontSize: "16px",
+                        }}
+                    />
+                    {showSuggestions && filteredSuggestions.length > 0 && (
+                        <ul
+                            style={{
+                                position: "absolute",
+                                top: "100%",
+                                left: 0,
+                                width: "100%",
+                                backgroundColor: "#333",
+                                color: "#fff",
+                                listStyleType: "none",
+                                padding: "5px 0",
+                                margin: 0,
+                                borderRadius: "5px",
+                                boxShadow: "0 0 10px rgba(255, 255, 255, 0.2)",
+                                maxHeight: "150px",
+                                overflowY: "auto",
+                            }}
+                        >
+                            {filteredSuggestions.map((name, index) => (
+                                <li
+                                    key={index}
+                                    onClick={() => handleSelectSuggestion(name)}
+                                    style={{
+                                        padding: "10px",
+                                        cursor: "pointer",
+                                        transition: "background 0.3s",
+                                    }}
+                                    onMouseEnter={(e) => (e.target.style.backgroundColor = "#444")}
+                                    onMouseLeave={(e) => (e.target.style.backgroundColor = "#333")}
+                                >
+                                    {name}
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", marginTop: "20px" }}>
                     <button
                         onClick={() => setShowAddMemberForm(false)}
                         style={{
