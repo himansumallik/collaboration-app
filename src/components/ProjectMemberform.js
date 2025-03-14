@@ -29,7 +29,8 @@ const AddProjectMemberForm = ({ onAddMember, onClose }) => {
 
     return (
         <FormContainer>
-            <h2><FaProjectDiagram style={{ color: "orange" }} /> Project Details</h2>
+            <h2><FaProjectDiagram style={{ color: "orange" }} /> Add Project Member</h2>
+
             <FormGroup>
                 <FormLabel>Project ID <span style={{ color: "red" }}>*</span></FormLabel>
                 <FormInput 
@@ -70,12 +71,12 @@ const AddProjectMemberForm = ({ onAddMember, onClose }) => {
                     value={createdAt} 
                     onChange={(e) => setCreatedAt(e.target.value)} 
                     required
-                    max={new Date().toISOString().split("T")[0]} // Restricts future dates
+                    max={new Date().toISOString().split("T")[0]}
                 />
             </FormGroup>
 
             <FormButtonContainer>
-                <FormButton type="submit">Add Project</FormButton>
+                <FormButton type="submit" onClick={handleSubmit}>Add Member</FormButton>
                 <FormButton 
                     type="button" 
                     onClick={onClose} 
@@ -87,29 +88,21 @@ const AddProjectMemberForm = ({ onAddMember, onClose }) => {
         </FormContainer>
     );
 };  
+
 export default AddProjectMemberForm;
 
 const FormContainer = styled.div`
+    background: #1A1A1A;
+    padding: 30px;
+    border-radius: 10px;
+    width: 350px;
+    text-align: left;
+    color: white;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: rgba(51, 49, 49, 0.15);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
-    padding: 30px;
-    border-radius: 16px;
-    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.9);
-    z-index: 1000;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    width: 100%;
-    max-width: 500px;
-    transition: all 0.3s ease-in-out;
-
-    &:hover {
-        transform: translate(-50%, -50%) scale(1.02);
-        box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.4);
-    }
+    box-shadow: 0px 0px 10px rgba(255, 165, 0, 0.5);
 `;
 
 const FormGroup = styled.div`
@@ -117,71 +110,47 @@ const FormGroup = styled.div`
 `;
 
 const FormLabel = styled.label`
-    font-weight: bold;
-    display: block;
-    margin-bottom: 5px;
-    color: white;
+    font-size: 16px;
+    color: #ffcc00;
 `;
 
 const FormInput = styled.input`
     width: 100%;
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-    background-color: #fff;
-    color: #333;
-    transition: border-color 0.3s ease, transform 0.2s ease;
-
-    &:focus {
-        border-color: #007bff;
-        outline: none;
-        transform: scale(1.05);
-    }
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
 `;
 
 const FormTextarea = styled.textarea`
     width: 100%;
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-    background-color: #fff;
-    color: #333;
-    height: 100px;
-    resize: vertical;
-    transition: border-color 0.3s ease, transform 0.2s ease;
-
-    &:focus {
-        border-color: #007bff;
-        outline: none;
-        transform: scale(1.05);
-    }
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
 `;
 
 const FormButtonContainer = styled.div`
     display: flex;
     justify-content: space-between;
-    margin-top: 20px;
 `;
 
 const FormButton = styled.button`
-    width: 48%;
-    padding: 14px;
-    background-color: rgb(73, 155, 62);
-    color: #fff;
-    font-size: 1rem;
+    background: orange;
+    color: black;
+    padding: 10px;
     border: none;
-    border-radius: 8px;
+    border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-
+    font-weight: bold;
+    width: 48%;
+    transition: background 0.3s;
+    
     &:hover {
-        background-color: rgb(26, 145, 11);
-        transform: scale(1.05);
-    }
-
-    &:active {
-        transform: scale(1);
+        background: #ffcc00;
     }
 `;
