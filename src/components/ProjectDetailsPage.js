@@ -5,7 +5,7 @@ import Sidebar from "./Sidebar";
 import ProjectData from "../database/ProjectData";
 import { DashboardContainer, MainContent } from "./styles";
 import { CiSquarePlus } from "react-icons/ci";
-import AddProjectMemberForm from "./ProjectMemberform";
+import AddTaskForm from "./TaskAddForm"; // Make sure the filename matches exactly
 
 const ProjectDetailsPage = () => {
     const [isSidebarOpen, setSidebarOpen] = useState(true);
@@ -20,16 +20,6 @@ const ProjectDetailsPage = () => {
     const project = projects.find((p) => p.name === projectName);
 
     const handleCloseForm = () => setShowForm(false);
-
-    const handleAddMember = (memberName) => {
-        const updatedProjects = projects.map((p) =>
-            p.name === projectName
-                ? { ...p, members: [...p.members, memberName] }
-                : p
-        );
-        setProjects(updatedProjects);
-        setShowForm(false);
-    };
 
     const handleTeamsClick = () => {
         setIsTeamExpanded(!isTeamExpanded);
@@ -204,30 +194,18 @@ const ProjectDetailsPage = () => {
 
                 {/* Floating Button */}
                 <div
-                    style={{
-                        position: "fixed",
-                        bottom: "80px",
-                        right: "70px",
-                        backgroundColor: "#121212",
-                        color: "#FFFFFF",
-                        borderRadius: "50%",
-                        width: "70px",
-                        height: "70px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        cursor: "pointer",
-                        boxShadow: "0px 0px 50px 2px rgba(243, 109, 69, 0.84)",
-                        transition: "transform 0.3s ease-in-out",
-                    }}
+                    style={{ position: "fixed", bottom: "80px", right: "70px", backgroundColor: "black", color: "white",
+                        borderRadius: "50%", width: "70px", height: "70px", display: "flex", justifyContent: "center",
+                        alignItems: "center", cursor: "pointer", boxShadow: "0px 0px 50px 2px rgba(243, 109, 69, 0.84)",
+                        transition: "transform 0.3s ease-in-out" }}
                     className="floating-button"
                     onClick={() => setShowForm(true)}
                     onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.2)")}
                     onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
                 >
-                    <CiSquarePlus style={{ width: "50px", height: "50px", color: "#FF6347" }} />
+                    <CiSquarePlus style={{ width: "50px", height: "50px", color: "orange" }} />
                 </div>
-                {showForm && <AddProjectMemberForm onAddMember={handleAddMember} onClose={handleCloseForm} />}
+                {showForm && <AddTaskForm onClose={handleCloseForm} />}
             </DashboardContainer>
         </div>
     );
